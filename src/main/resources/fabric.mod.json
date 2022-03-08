@@ -1,12 +1,13 @@
 {
   "schemaVersion": 1,
-  "id": "modid",
-  "version": "${version}",
+  "id": "dynamic_ecology",
+  "version": "0.0.1",
 
-  "name": "Example Mod",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "name": "Dynamic Ecology",
+  "description": "The plants are living!",
   "authors": [
-    "Me!"
+    "MooseOnTheRocks",
+    "birdsdrib"
   ],
   "contact": {
     "homepage": "https://fabricmc.net/",
@@ -14,16 +15,19 @@
   },
 
   "license": "CC0-1.0",
-  "icon": "assets/modid/icon.png",
+  "icon": "assets/dynamic_ecology/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.fabricmc.example.ExampleMod"
+      "dev.foltz.de.DEMod"
+    ],
+    "client": [
+      "dev.foltz.de.client.DEModClient"
     ]
   },
   "mixins": [
-    "modid.mixins.json"
+    "dynamic_ecology.mixins.json"
   ],
 
   "depends": {
