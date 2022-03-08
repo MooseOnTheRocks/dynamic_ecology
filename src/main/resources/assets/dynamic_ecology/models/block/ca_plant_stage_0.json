@@ -1,0 +1,6 @@
+{
+  "parent": "dynamic_ecology:block/ca_plant_base",
+  "textures": {
+    "cross": "dynamic_ecology:block/ca_plant_stage_0"
+  }
+}
