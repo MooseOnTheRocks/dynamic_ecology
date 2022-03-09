@@ -2,30 +2,32 @@ package dev.foltz.de.block;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
-import net.minecraft.state.property.IntProperty;
 import net.minecraft.tag.BlockTags;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
 
 
-public abstract class CAPlant extends PlantBlock {
-    public static final IntProperty GROWTH_STAGE = IntProperty.of("growth_stage", 0, 3);
-    public final VoxelShape[] boundingBoxes;
+public abstract class AbstractSingleBlockPlant extends PlantBlock {
 
-    public CAPlant(int numStages, double minWidth, double maxWidth, double minHeight, double maxHeight) {
+    public AbstractSingleBlockPlant() {
         super(FabricBlockSettings.of(Material.PLANT).noCollision().solidBlock((state, world, pos) -> false).nonOpaque());
-        setDefaultState(this.getStateManager().getDefaultState().with(GROWTH_STAGE, 0));
-        boundingBoxes = BlockUtils.lerpBoundingBoxes(4, Direction.DOWN, minWidth, maxWidth, minHeight, maxHeight);
     }
 
-    public abstract void plantTick(World world, BlockState chosenBlockState, BlockPos chosenPos, Random random);
+    @Override
+    public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
+        super.onPlaced(world, pos, state, placer, itemStack);
+        world.createAndScheduleBlockTick(pos, state.getBlock(), 1);
+    }
+
+    public abstract void plantTick(World world, BlockState blockState, BlockPos pos, Random random);
 
     @Override
     protected boolean canPlantOnTop(BlockState floor, BlockView world, BlockPos pos) {
@@ -33,14 +35,8 @@ public abstract class CAPlant extends PlantBlock {
     }
 
     @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return boundingBoxes[state.get(CAPlant.GROWTH_STAGE)];
-    }
-
-    @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         super.appendProperties(builder);
-        builder.add(GROWTH_STAGE);
     }
 
     @Override

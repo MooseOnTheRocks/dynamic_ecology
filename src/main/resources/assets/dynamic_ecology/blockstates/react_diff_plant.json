@@ -1,0 +1,22 @@
+{
+  "variants": {
+    "growth_stage=0": [
+      { "model": "dynamic_ecology:block/react_diff_plant_stage_0" },
+      { "model": "dynamic_ecology:block/react_diff_plant_stage_0", "y": 90},
+      { "model": "dynamic_ecology:block/react_diff_plant_stage_0", "y": 180},
+      { "model": "dynamic_ecology:block/react_diff_plant_stage_0", "y": 270}
+    ],
+    "growth_stage=1": [
+      { "model": "dynamic_ecology:block/react_diff_plant_stage_1" },
+      { "model": "dynamic_ecology:block/react_diff_plant_stage_1", "y": 90},
+      { "model": "dynamic_ecology:block/react_diff_plant_stage_1", "y": 180},
+      { "model": "dynamic_ecology:block/react_diff_plant_stage_1", "y": 270}
+    ],
+    "growth_stage=2": [
+      { "model": "dynamic_ecology:block/react_diff_plant_stage_2" },
+      { "model": "dynamic_ecology:block/react_diff_plant_stage_2", "y": 90},
+      { "model": "dynamic_ecology:block/react_diff_plant_stage_2", "y": 180},
+      { "model": "dynamic_ecology:block/react_diff_plant_stage_2", "y": 270}
+    ]
+  }
+}

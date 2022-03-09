@@ -9,5 +9,7 @@ public class DEModClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         BlockRenderLayerMap.INSTANCE.putBlock(DEMod.CONWAY_PLANT, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(DEMod.REACT_DIFF_PLANT, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(DEMod.EYE_PLANT, RenderLayer.getCutout());
     }
 }

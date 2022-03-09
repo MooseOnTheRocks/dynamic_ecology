@@ -1,0 +1,32 @@
+{
+  "variants": {
+    "eyes_open=true": [
+      { "model": "dynamic_ecology:block/eye_plant_alt_0_open" },
+      { "model": "dynamic_ecology:block/eye_plant_alt_0_open", "y": 90},
+      { "model": "dynamic_ecology:block/eye_plant_alt_0_open", "y": 180},
+      { "model": "dynamic_ecology:block/eye_plant_alt_0_open", "y": 270},
+      { "model": "dynamic_ecology:block/eye_plant_alt_1_open" },
+      { "model": "dynamic_ecology:block/eye_plant_alt_1_open", "y": 90},
+      { "model": "dynamic_ecology:block/eye_plant_alt_1_open", "y": 180},
+      { "model": "dynamic_ecology:block/eye_plant_alt_1_open", "y": 270},
+      { "model": "dynamic_ecology:block/eye_plant_alt_2_open" },
+      { "model": "dynamic_ecology:block/eye_plant_alt_2_open", "y": 90},
+      { "model": "dynamic_ecology:block/eye_plant_alt_2_open", "y": 180},
+      { "model": "dynamic_ecology:block/eye_plant_alt_2_open", "y": 270}
+    ],
+    "eyes_open=false": [
+      { "model": "dynamic_ecology:block/eye_plant_alt_0_closed" },
+      { "model": "dynamic_ecology:block/eye_plant_alt_0_closed", "y": 90},
+      { "model": "dynamic_ecology:block/eye_plant_alt_0_closed", "y": 180},
+      { "model": "dynamic_ecology:block/eye_plant_alt_0_closed", "y": 270},
+      { "model": "dynamic_ecology:block/eye_plant_alt_1_closed" },
+      { "model": "dynamic_ecology:block/eye_plant_alt_1_closed", "y": 90},
+      { "model": "dynamic_ecology:block/eye_plant_alt_1_closed", "y": 180},
+      { "model": "dynamic_ecology:block/eye_plant_alt_1_closed", "y": 270},
+      { "model": "dynamic_ecology:block/eye_plant_alt_2_closed" },
+      { "model": "dynamic_ecology:block/eye_plant_alt_2_closed", "y": 90},
+      { "model": "dynamic_ecology:block/eye_plant_alt_2_closed", "y": 180},
+      { "model": "dynamic_ecology:block/eye_plant_alt_2_closed", "y": 270}
+    ]
+  }
+}

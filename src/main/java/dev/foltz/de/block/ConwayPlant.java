@@ -1,19 +1,41 @@
 package dev.foltz.de.block;
 
 import dev.foltz.de.DEMod;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.ShapeContext;
+import net.minecraft.state.StateManager;
+import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
 import java.util.Random;
 import java.util.stream.Stream;
 
-public class ConwayPlant extends CAPlant {
+public class ConwayPlant extends AbstractSingleBlockPlant {
+    public static final IntProperty GROWTH_STAGE = IntProperty.of("growth_stage", 0, 3);
     public static final int RANGE = 2;
+    public final VoxelShape[] boundingBoxes;
 
     public ConwayPlant() {
-        super(3, 3, 10, 6, 14);
+        super();
+        this.boundingBoxes = BlockUtils.lerpBoundingBoxes(4, Direction.DOWN, 3, 10, 6, 14);
+        setDefaultState(this.getStateManager().getDefaultState().with(GROWTH_STAGE, 0));
+    }
+
+    @Override
+    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+        super.appendProperties(builder);
+        builder.add(GROWTH_STAGE);
+    }
+
+    @Override
+    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+        return boundingBoxes[state.get(GROWTH_STAGE)];
     }
 
     @Override
@@ -36,9 +58,9 @@ public class ConwayPlant extends CAPlant {
 
         // Spawn mechanics
         if (stage == 3) {
-            double x = pos.getX() + RANGE - 2 * random.nextDouble() * RANGE;
-            double y = pos.getY() + RANGE - 2 * random.nextDouble() * RANGE;
-            double z = pos.getZ() + RANGE - 2 * random.nextDouble() * RANGE;
+            double x = Math.round(pos.getX() + RANGE - 2 * random.nextDouble() * RANGE);
+            double y = Math.round(pos.getY() + RANGE - 2 * random.nextDouble() * RANGE);
+            double z = Math.round(pos.getZ() + RANGE - 2 * random.nextDouble() * RANGE);
             BlockPos chosenPos = new BlockPos(x, y, z);
             BlockState chosenBlock = world.getBlockState(chosenPos);
             if (chosenBlock.getBlock() != Blocks.AIR) {

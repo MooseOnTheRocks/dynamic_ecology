@@ -1,3 +1,5 @@
 {
-  "block.dynamic_ecology.conway_plant": "Conway Plant Seeds"
+  "block.dynamic_ecology.conway_plant": "Conway Plant Seeds",
+  "block.dynamic_ecology.react_diff_plant": "React Diff Plant Seeds",
+  "block.dynamic_ecology.eye_plant": "Eye Plant Seeds"
 }
