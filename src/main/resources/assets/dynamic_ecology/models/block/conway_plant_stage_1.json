@@ -1,6 +1,6 @@
 {
   "parent": "dynamic_ecology:block/ca_plant_base",
   "textures": {
-    "cross": "dynamic_ecology:block/ca_plant_stage_1"
+    "cross": "dynamic_ecology:block/conway_plant_stage_1"
   }
 }

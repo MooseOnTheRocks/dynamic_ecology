@@ -1,6 +1,6 @@
 package dev.foltz.de;
 
-import dev.foltz.de.block.CAPlant;
+import dev.foltz.de.block.ConwayPlant;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.block.Block;
@@ -15,12 +15,12 @@ public class DEMod implements ModInitializer {
     public static final String MODID = "dynamic_ecology";
     public static final Logger LOG = LoggerFactory.getLogger(MODID);
 
-    public static final Block CAPlant = new CAPlant();
+    public static final Block CONWAY_PLANT = new ConwayPlant();
 
     @Override
     public void onInitialize() {
         LOG.info("Hello, " + MODID + "!");
-        Registry.register(Registry.BLOCK, new Identifier(MODID, "ca_plant"), CAPlant);
-        Registry.register(Registry.ITEM, new Identifier(MODID, "ca_seeds"), new BlockItem(CAPlant, new FabricItemSettings().group(ItemGroup.MISC)));
+        Registry.register(Registry.BLOCK, new Identifier(MODID, "conway_plant"), CONWAY_PLANT);
+        Registry.register(Registry.ITEM, new Identifier(MODID, "conway_plant_seeds"), new BlockItem(CONWAY_PLANT, new FabricItemSettings().group(ItemGroup.MISC)));
     }
 }

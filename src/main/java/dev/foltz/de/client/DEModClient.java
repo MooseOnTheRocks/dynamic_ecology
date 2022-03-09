@@ -8,6 +8,6 @@ import net.minecraft.client.render.RenderLayer;
 public class DEModClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
-        BlockRenderLayerMap.INSTANCE.putBlock(DEMod.CAPlant, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(DEMod.CONWAY_PLANT, RenderLayer.getCutout());
     }
 }
