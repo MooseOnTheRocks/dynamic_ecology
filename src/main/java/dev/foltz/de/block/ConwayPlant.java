@@ -1,10 +1,7 @@
 package dev.foltz.de.block;
 
 import dev.foltz.de.DEMod;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.ShapeContext;
+import net.minecraft.block.*;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.math.BlockPos;
@@ -63,7 +60,7 @@ public class ConwayPlant extends AbstractSingleBlockPlant {
             double z = Math.round(pos.getZ() + RANGE - 2 * random.nextDouble() * RANGE);
             BlockPos chosenPos = new BlockPos(x, y, z);
             BlockState chosenBlock = world.getBlockState(chosenPos);
-            if (chosenBlock.getBlock() != Blocks.AIR) {
+            if (chosenBlock.getBlock() != Blocks.AIR && chosenBlock.getMaterial() != Material.REPLACEABLE_PLANT) {
                 return;
             }
             if (!canPlantOnTop(world.getBlockState(chosenPos.down()), world, chosenPos)) {

@@ -1,10 +1,7 @@
 package dev.foltz.de.block;
 
 import dev.foltz.de.DEMod;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.ShapeContext;
+import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
@@ -66,7 +63,7 @@ public class EyePlant extends AbstractSingleBlockPlant {
             Direction dir = Direction.values()[random.nextInt(Direction.values().length)];
             BlockPos chosenPos = pos.offset(dir);
             BlockState chosenBlock = world.getBlockState(chosenPos);
-            if (chosenBlock.getBlock() != Blocks.AIR) {
+            if (chosenBlock.getBlock() != Blocks.AIR && chosenBlock.getMaterial() != Material.REPLACEABLE_PLANT) {
                 return;
             }
             if (!canPlantOnTop(world.getBlockState(chosenPos.down()), world, chosenPos)) {

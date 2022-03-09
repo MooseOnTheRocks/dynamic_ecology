@@ -1,10 +1,7 @@
 package dev.foltz.de.block;
 
 import dev.foltz.de.DEMod;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.ShapeContext;
+import net.minecraft.block.*;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.math.BlockPos;
@@ -26,7 +23,7 @@ public class ReactDiffPlant extends AbstractSingleBlockPlant {
 
     public ReactDiffPlant() {
         super();
-        this.boundingBoxes = BlockUtils.lerpBoundingBoxes(3, Direction.DOWN, 5, 10, 4, 14);
+        this.boundingBoxes = BlockUtils.lerpBoundingBoxes(3, Direction.DOWN, 5, 8, 4, 13);
         setDefaultState(this.getStateManager().getDefaultState().with(GROWTH_STAGE, 0));
     }
 
@@ -97,7 +94,7 @@ public class ReactDiffPlant extends AbstractSingleBlockPlant {
             double z = Math.round(pos.getZ() + ACTIVATION_RANGE - 2 * random.nextDouble() * ACTIVATION_RANGE);
             BlockPos chosenPos = new BlockPos(x, y, z);
             BlockState chosenBlock = world.getBlockState(chosenPos);
-            if (chosenBlock.getBlock() != Blocks.AIR) {
+            if (chosenBlock.getBlock() != Blocks.AIR && chosenBlock.getMaterial() != Material.REPLACEABLE_PLANT) {
                 return;
             }
             if (!canPlantOnTop(world.getBlockState(chosenPos.down()), world, chosenPos)) {

@@ -5,6 +5,7 @@ import net.minecraft.block.*;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.state.StateManager;
 import net.minecraft.tag.BlockTags;
 import net.minecraft.util.math.BlockPos;
@@ -18,7 +19,7 @@ import java.util.Random;
 public abstract class AbstractSingleBlockPlant extends PlantBlock {
 
     public AbstractSingleBlockPlant() {
-        super(FabricBlockSettings.of(Material.PLANT).noCollision().solidBlock((state, world, pos) -> false).nonOpaque());
+        super(FabricBlockSettings.of(Material.PLANT).noCollision().solidBlock((state, world, pos) -> false).nonOpaque().breakInstantly().sounds(BlockSoundGroup.GRASS));
     }
 
     @Override
