@@ -15,7 +15,7 @@ import java.util.stream.Stream;
 
 public class ReactDiffPlant extends AbstractSingleBlockPlant {
     public static final int ACTIVATION_RANGE = 1;
-    public static final int INHIBITION_RANGE = 3;
+    public static final int INHIBITION_RANGE = 4;
     public static int RANGE = Math.max(ACTIVATION_RANGE, INHIBITION_RANGE);
     public static final IntProperty GROWTH_STAGE = IntProperty.of("growth_stage", 0, 2);
 
@@ -44,7 +44,7 @@ public class ReactDiffPlant extends AbstractSingleBlockPlant {
         double stage1Amount = 2d;
         double stage2Amount = 12d;
         double INC = 4d;
-        double DEC = -1d;
+        double DEC = -0.6d;
         double V = blocksInRange
                 .filter(bp -> world.getBlockState(bp).getBlock() == DEMod.REACT_DIFF_PLANT)
                 .map(bp -> {
