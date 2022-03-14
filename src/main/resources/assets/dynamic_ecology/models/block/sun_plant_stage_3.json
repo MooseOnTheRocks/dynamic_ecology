@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/tinted_cross",
+  "textures": {
+    "cross": "dynamic_ecology:block/sun_plant_stage_3"
+  }
+}

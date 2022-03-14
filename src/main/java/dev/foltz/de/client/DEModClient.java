@@ -11,5 +11,6 @@ public class DEModClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(DEMod.CONWAY_PLANT, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(DEMod.REACT_DIFF_PLANT, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(DEMod.EYE_PLANT, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(DEMod.SUN_PLANT, RenderLayer.getCutout());
     }
 }
