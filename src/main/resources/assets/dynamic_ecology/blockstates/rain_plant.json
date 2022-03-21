@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "wilted=false": [
+      { "model": "dynamic_ecology:block/rain_plant" },
+      { "model": "dynamic_ecology:block/rain_plant", "y": 90},
+      { "model": "dynamic_ecology:block/rain_plant", "y": 180},
+      { "model": "dynamic_ecology:block/rain_plant", "y": 270}
+    ],
+    "wilted=true": [
+      { "model": "dynamic_ecology:block/rain_plant_wilted" },
+      { "model": "dynamic_ecology:block/rain_plant_wilted", "y": 90},
+      { "model": "dynamic_ecology:block/rain_plant_wilted", "y": 180},
+      { "model": "dynamic_ecology:block/rain_plant_wilted", "y": 270}
+    ]
+  }
+}

@@ -1,13 +1,16 @@
 package dev.foltz.de;
 
 import dev.foltz.de.block.*;
+import dev.foltz.de.plant.Plants;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.Material;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.IntProperty;
@@ -120,26 +123,105 @@ public class DEMod implements ModInitializer {
                 }
             }).create();
 
+    public static final BooleanProperty WILTED = BooleanProperty.of("wilted");
+    public static void tickRainPlant(World world, BlockState blockState, BlockPos blockPos, Random random) {
+        final int range = 3;
+        final int SPAWN_RANGE = 1;
+        boolean inTheRain = world.isRaining() && world.isSkyVisible(blockPos);
+        boolean wilted = blockState.get(WILTED);
+        boolean nearWater = BlockUtils.streamBlocksInRange(blockPos, range)
+                .anyMatch(bp -> world.getFluidState(bp).getFluid() == Fluids.WATER);
+
+        // Reproduce
+        if (inTheRain || nearWater) {
+            if (wilted) {
+                world.setBlockState(blockPos, blockState.with(WILTED, false));
+                return;
+            }
+            double x = Math.round(blockPos.getX() + SPAWN_RANGE - 2 * random.nextDouble() * SPAWN_RANGE);
+            double y = Math.round(blockPos.getY() + SPAWN_RANGE - 2 * random.nextDouble() * SPAWN_RANGE);
+            double z = Math.round(blockPos.getZ() + SPAWN_RANGE - 2 * random.nextDouble() * SPAWN_RANGE);
+            BlockPos chosenPos = new BlockPos(x, y, z);
+            BlockState chosenBlock = world.getBlockState(chosenPos);
+            if (!(chosenBlock.getBlock() == Blocks.AIR || chosenBlock.getMaterial() == Material.REPLACEABLE_PLANT)) {
+                return;
+            }
+            if (!world.getBlockState(chosenPos.down()).isIn(BlockTags.DIRT)) {
+                return;
+            }
+            world.setBlockState(chosenPos, blockState.getBlock().getDefaultState());
+        }
+        // Wilt and die
+        else {
+            if (wilted) {
+                world.breakBlock(blockPos, true);
+            }
+            else {
+                world.setBlockState(blockPos, blockState.with(WILTED, true));
+            }
+        }
+    }
+
+    public static final Block RAIN_PLANT = ModBlockFactory
+            .builder(ModBlockFactory.SETTINGS_PLANT_DEFAULT)
+            .withDefaultProperty(WILTED, true)
+            .shapeProvider(((blockState, blockView, blockPos, shapeContext) -> blockState.get(WILTED)
+                    ? Block.createCuboidShape(2, 0, 2, 14, 5, 14)
+                    : Block.createCuboidShape(2, 0, 2, 13, 9, 13)
+            ))
+            .withTick(DEMod::tickRainPlant)
+            .create();
+
     @Override
     public void onInitialize() {
         LOG.info("Hello, " + MODID + "!");
 
-        Registry.register(Registry.BLOCK, new Identifier(MODID, "cube_stalk_plant"), CUBE_STALK_PLANT);
-        Registry.register(Registry.ITEM, new Identifier(MODID, "cube_stalk_plant_seeds"), new BlockItem(CUBE_STALK_PLANT, new FabricItemSettings().group(ItemGroup.MISC)));
+//        Registry.register(Registry.BLOCK, new Identifier(MODID, "cube_stalk_plant"), CUBE_STALK_PLANT);
+//        Registry.register(Registry.ITEM, new Identifier(MODID, "cube_stalk_plant_seeds"), new BlockItem(CUBE_STALK_PLANT, new FabricItemSettings().group(ItemGroup.MISC)));
 
-        Registry.register(Registry.BLOCK, new Identifier(MODID, "conway_plant"), CONWAY_PLANT);
-        Registry.register(Registry.ITEM, new Identifier(MODID, "conway_plant_seeds"), new BlockItem(CONWAY_PLANT, new FabricItemSettings().group(ItemGroup.MISC)));
+        registerBlock("cube_stalk_plant", CUBE_STALK_PLANT);
+        registerBlockItem("cube_stalk_plant_seeds", CUBE_STALK_PLANT);
+
+        registerBlock("conway_plant", CONWAY_PLANT);
+        registerBlockItem("conway_plant_seeds", CONWAY_PLANT);
+
+        registerBlock("react_diff_plant", REACT_DIFF_PLANT);
+        registerBlockItem("react_diff_plant_seeds", REACT_DIFF_PLANT);
+
+        registerBlock("eye_plant", EYE_PLANT);
+        registerBlockItem("eye_plant_seeds", EYE_PLANT);
+
+        registerBlock("sun_plant", SUN_PLANT);
+        registerBlockItem("sun_plant_seeds", SUN_PLANT);
+
+        registerBlock("rain_plant", RAIN_PLANT);
+        registerBlockItem("rain_plant_seeds", RAIN_PLANT);
 
 //        Registry.register(Registry.BLOCK, new Identifier(MODID, "conway_plant"), CONWAY_PLANT);
 //        Registry.register(Registry.ITEM, new Identifier(MODID, "conway_plant_seeds"), new BlockItem(CONWAY_PLANT, new FabricItemSettings().group(ItemGroup.MISC)));
 
-        Registry.register(Registry.BLOCK, new Identifier(MODID, "react_diff_plant"), REACT_DIFF_PLANT);
-        Registry.register(Registry.ITEM, new Identifier(MODID, "react_diff_plant_seeds"), new BlockItem(REACT_DIFF_PLANT, new FabricItemSettings().group(ItemGroup.MISC)));
+//        Registry.register(Registry.BLOCK, new Identifier(MODID, "conway_plant"), CONWAY_PLANT);
+//        Registry.register(Registry.ITEM, new Identifier(MODID, "conway_plant_seeds"), new BlockItem(CONWAY_PLANT, new FabricItemSettings().group(ItemGroup.MISC)));
 
-        Registry.register(Registry.BLOCK, new Identifier(MODID, "eye_plant"), EYE_PLANT);
-        Registry.register(Registry.ITEM, new Identifier(MODID, "eye_plant_seeds"), new BlockItem(EYE_PLANT, new FabricItemSettings().group(ItemGroup.MISC)));
+//        Registry.register(Registry.BLOCK, new Identifier(MODID, "react_diff_plant"), REACT_DIFF_PLANT);
+//        Registry.register(Registry.ITEM, new Identifier(MODID, "react_diff_plant_seeds"), new BlockItem(REACT_DIFF_PLANT, new FabricItemSettings().group(ItemGroup.MISC)));
 
-        Registry.register(Registry.BLOCK, new Identifier(MODID, "sun_plant"), SUN_PLANT);
-        Registry.register(Registry.ITEM, new Identifier(MODID, "sun_plant_seeds"), new BlockItem(SUN_PLANT, new FabricItemSettings().group(ItemGroup.MISC)));
+//        Registry.register(Registry.BLOCK, new Identifier(MODID, "eye_plant"), EYE_PLANT);
+//        Registry.register(Registry.ITEM, new Identifier(MODID, "eye_plant_seeds"), new BlockItem(EYE_PLANT, new FabricItemSettings().group(ItemGroup.MISC)));
+//
+//        Registry.register(Registry.BLOCK, new Identifier(MODID, "sun_plant"), SUN_PLANT);
+//        Registry.register(Registry.ITEM, new Identifier(MODID, "sun_plant_seeds"), new BlockItem(SUN_PLANT, new FabricItemSettings().group(ItemGroup.MISC)));
+    }
+
+    public static Block registerBlock(String name, Block block) {
+        return Registry.register(Registry.BLOCK, new Identifier(MODID, name), block);
+    }
+
+    public static BlockItem registerBlockItem(String name, Block block) {
+        return Registry.register(Registry.ITEM, new Identifier(MODID, name), new BlockItem(block, new FabricItemSettings().group(ItemGroup.MISC)));
+    }
+
+    public static Item registerItem(String name, Item item) {
+        return Registry.register(Registry.ITEM, new Identifier(MODID, name), item);
     }
 }
