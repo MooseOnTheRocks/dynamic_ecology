@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "two_tall=false": [
+      { "model": "dynamic_ecology:block/cube_stalk_plant_one_tall" }
+    ],
+    "two_tall=true": [
+      { "model": "dynamic_ecology:block/cube_stalk_plant_two_tall" }
+    ]
+  }
+}

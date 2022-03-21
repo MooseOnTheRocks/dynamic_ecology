@@ -1,21 +1,20 @@
-package dev.foltz.de;
+package dev.foltz.de.block;
 
-import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.Property;
 
 import java.util.Map;
-import java.util.Set;
 
-public abstract class AbstractModBlock extends Block {
-    public <T extends Comparable<T>, V extends T> AbstractModBlock(Settings settings) {
+public abstract class ModBlock extends Block {
+    public <T extends Comparable<T>, V extends T> ModBlock(Settings settings) {
         super(settings);
+        // Dynamically create default BlockState
         BlockState defaultState = getStateManager().getDefaultState();
-        defaultBlockProperties().forEach((key, value) -> {
-            defaultState.with((Property<T>) key, (V) value);
-        });
+        for (Map.Entry<Property<?>, ?> entry : defaultBlockProperties().entrySet()) {
+            defaultState = defaultState.with((Property<T>) entry.getKey(), (V) entry.getValue());
+        }
         setDefaultState(defaultState);
     }
 

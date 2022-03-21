@@ -9,6 +9,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.Material;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.tag.BlockTags;
@@ -86,12 +87,45 @@ public class DEMod implements ModInitializer {
             .shapeProvider(((blockState, blockView, blockPos, shapeContext)
                     -> BlockUtils.lerpBoundingBoxes(4, Direction.DOWN, 3, 10, 6, 14)
                         [blockState.get(TESTING_GROWTH_STAGE)]))
-            .withPlantTick(DEMod::plantTickConway)
+            .withTick(DEMod::plantTickConway)
             .create();
+
+    public static final BooleanProperty PROPERTY_TWO_TALL = BooleanProperty.of("two_tall");
+    public static final Block CUBE_STALK_PLANT = ModBlockFactory.builder(ModBlockFactory.SETTINGS_PLANT_SOLID)
+            .withDefaultProperty(PROPERTY_TWO_TALL, false)
+            .shapeProvider(((bs, w, bp, sc) -> {
+                if (bs.get(PROPERTY_TWO_TALL)) {
+                    return Block.createCuboidShape(4, 0, 4, 12, 16, 12);
+                }
+                else {
+                    return Block.createCuboidShape(4, 0, 4, 12, 8, 12);
+                }
+            }))
+            .withBreakPredicate((worldView, blockState, blockPos) -> {
+                return worldView.getBlockState(blockPos.down()).isAir();
+            })
+            .withTick((world, blockState, blockPos, random) -> {
+//                if (random.nextFloat() < 0.9) {
+//                    return;
+//                }
+                if (!blockState.get(PROPERTY_TWO_TALL)) {
+                    world.setBlockState(blockPos, blockState.with(PROPERTY_TWO_TALL, true));
+                }
+                else {
+                    if (world.getBlockState(blockPos.up()).isAir()) {
+                        BlockState bs = blockState.with(PROPERTY_TWO_TALL, false);
+                        world.setBlockState(blockPos.up(), bs);
+                        bs.neighborUpdate(world, blockPos, blockState.getBlock(), blockPos.up(), false);
+                    }
+                }
+            }).create();
 
     @Override
     public void onInitialize() {
         LOG.info("Hello, " + MODID + "!");
+
+        Registry.register(Registry.BLOCK, new Identifier(MODID, "cube_stalk_plant"), CUBE_STALK_PLANT);
+        Registry.register(Registry.ITEM, new Identifier(MODID, "cube_stalk_plant_seeds"), new BlockItem(CUBE_STALK_PLANT, new FabricItemSettings().group(ItemGroup.MISC)));
 
         Registry.register(Registry.BLOCK, new Identifier(MODID, "conway_plant"), CONWAY_PLANT);
         Registry.register(Registry.ITEM, new Identifier(MODID, "conway_plant_seeds"), new BlockItem(CONWAY_PLANT, new FabricItemSettings().group(ItemGroup.MISC)));
