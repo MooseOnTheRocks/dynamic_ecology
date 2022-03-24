@@ -4,16 +4,15 @@ import dev.foltz.de.DEMod;
 import dev.foltz.de.plant.Plants;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+import net.minecraft.block.Block;
 import net.minecraft.client.render.RenderLayer;
 
 public class DEModClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
-        BlockRenderLayerMap.INSTANCE.putBlock(DEMod.RAIN_PLANT, RenderLayer.getCutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(DEMod.CONWAY_PLANT, RenderLayer.getCutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(DEMod.REACT_DIFF_PLANT, RenderLayer.getCutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(DEMod.EYE_PLANT, RenderLayer.getCutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(DEMod.SUN_PLANT, RenderLayer.getCutout());
-        BlockRenderLayerMap.INSTANCE.putBlock(DEMod.CUBE_STALK_PLANT, RenderLayer.getCutout());
+        // TODO: Specify which blocks go in which layer (check block settings?)
+        for (Block block : Plants.ALL_PLANT_BLOCKS.values()) {
+            BlockRenderLayerMap.INSTANCE.putBlock(block, RenderLayer.getCutout());
+        }
     }
 }

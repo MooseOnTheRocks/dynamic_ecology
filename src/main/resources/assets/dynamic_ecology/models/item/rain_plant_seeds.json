@@ -1,6 +1,0 @@
-{
-  "parent": "item/generated",
-  "textures": {
-    "layer0": "dynamic_ecology:item/rain_plant_seeds"
-  }
-}

@@ -1,8 +1,6 @@
-package dev.foltz.de;
+package dev.foltz.de.util;
 
 import java.util.Objects;
-import java.util.function.BiPredicate;
-import java.util.function.Predicate;
 
 @FunctionalInterface
 public interface IPredicate3<T1, T2, T3> {

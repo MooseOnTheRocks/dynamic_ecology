@@ -1,34 +1,27 @@
 package dev.foltz.de.mixins;
 
-import dev.foltz.de.DEMod;
+import dev.foltz.de.plant.Plants;
+import dev.foltz.de.plant.plants.CubeStalkPlant;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.ShapeContext;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.WorldRenderer;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.gen.Accessor;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(WorldRenderer.class)
 public class WorldRendererMixin {
-    //    Lnet/minecraft/client/render/WorldRenderer;drawBlockOutline(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;Lnet/minecraft/entity/Entity;DDDLnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;)V
     @Inject(method="drawBlockOutline(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;Lnet/minecraft/entity/Entity;DDDLnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;)V", at=@At("HEAD"), cancellable=true)
     private void drawBlockOutline(MatrixStack matrices, VertexConsumer vertexConsumer, Entity entity, double d, double e, double f, BlockPos pos, BlockState state, CallbackInfo ci) {
-        if (state.getBlock() == DEMod.CUBE_STALK_PLANT) {
+        if (state.getBlock() == CubeStalkPlant.CUBE_STALK_PLANT_BLOCK) {
             final VoxelShape CUBE_STALK_OUTLINE_LOWER = Block.createCuboidShape(4, 0, 4, 12, 8, 12);
             final VoxelShape CUBE_STALK_OUTLINE_UPPER = Block.createCuboidShape(4, 8, 4, 12, 16, 12);
 
@@ -38,7 +31,6 @@ public class WorldRendererMixin {
             }
             double frac = Math.abs(hitResult.getPos().y % 1);
             boolean above = frac < 0.5;
-//            System.out.println("Hit: " + hitResult.getPos() + "; " + frac + "; " + above);
             VoxelShape outlineShape = above ? CUBE_STALK_OUTLINE_UPPER : CUBE_STALK_OUTLINE_LOWER;
 
             {

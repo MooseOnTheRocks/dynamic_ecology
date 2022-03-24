@@ -1,24 +1,19 @@
 package dev.foltz.de.block;
 
-import dev.foltz.de.DEMod;
+import dev.foltz.de.plant.Plants;
 import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.LightType;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
-import java.util.stream.Stream;
 
 public class EyePlant extends AbstractSingleBlockPlant {
     public final VoxelShape BOUNDING_BOX = Block.createCuboidShape(0, 0, 0, 16, 1, 16);
@@ -69,7 +64,7 @@ public class EyePlant extends AbstractSingleBlockPlant {
             if (!canPlantOnTop(world.getBlockState(chosenPos.down()), world, chosenPos)) {
                 return;
             }
-            world.setBlockState(chosenPos, DEMod.EYE_PLANT.getDefaultState());
+            world.setBlockState(chosenPos, Plants.EYE_PLANT_BLOCK.getDefaultState());
         }
     }
 

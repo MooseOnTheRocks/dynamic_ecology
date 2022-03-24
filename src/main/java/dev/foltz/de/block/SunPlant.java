@@ -1,6 +1,6 @@
 package dev.foltz.de.block;
 
-import dev.foltz.de.DEMod;
+import dev.foltz.de.plant.Plants;
 import net.minecraft.block.*;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.IntProperty;
@@ -46,7 +46,7 @@ public class SunPlant extends AbstractSingleBlockPlant {
         double INC = 2d;
         double DEC = -3.2d;
         double V = blocksInRange
-                .filter(bp -> world.getBlockState(bp).getBlock() == DEMod.SUN_PLANT)
+                .filter(bp -> world.getBlockState(bp).getBlock() == Plants.SUN_PLANT_BLOCK)
                 .map(bp -> {
                     double dx = pos.getX() - bp.getX();
                     double dy = pos.getY() - bp.getY();
@@ -114,7 +114,7 @@ public class SunPlant extends AbstractSingleBlockPlant {
 
             // Simulate a dead cell for this plant.
             double _V = BlockUtils.streamBlocksInRange(pos, 3)
-                    .filter(bp -> world.getBlockState(bp).getBlock() == DEMod.SUN_PLANT)
+                    .filter(bp -> world.getBlockState(bp).getBlock() == Plants.SUN_PLANT_BLOCK)
                     .map(bp -> {
                         double dx = pos.getX() - bp.getX();
                         double dy = pos.getY() - bp.getY();
@@ -132,7 +132,7 @@ public class SunPlant extends AbstractSingleBlockPlant {
                     })
                     .reduce(0d, Double::sum);
             if (_V > 0) {
-                world.setBlockState(chosenPos, DEMod.SUN_PLANT.getDefaultState());
+                world.setBlockState(chosenPos, Plants.SUN_PLANT_BLOCK.getDefaultState());
             }
 
             return;

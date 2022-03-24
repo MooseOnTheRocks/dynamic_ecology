@@ -1,4 +1,4 @@
-package dev.foltz.de;
+package dev.foltz.de.util;
 
 @FunctionalInterface
 public interface IFunction4V<T1, T2, T3, T4> {

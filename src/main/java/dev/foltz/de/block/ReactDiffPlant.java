@@ -1,6 +1,6 @@
 package dev.foltz.de.block;
 
-import dev.foltz.de.DEMod;
+import dev.foltz.de.plant.Plants;
 import net.minecraft.block.*;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.IntProperty;
@@ -46,7 +46,7 @@ public class ReactDiffPlant extends AbstractSingleBlockPlant {
         double INC = 4d;
         double DEC = -0.6d;
         double V = blocksInRange
-                .filter(bp -> world.getBlockState(bp).getBlock() == DEMod.REACT_DIFF_PLANT)
+                .filter(bp -> world.getBlockState(bp).getBlock() == Plants.REACT_DIFF_PLANT_BLOCK)
                 .map(bp -> {
                     double dx = pos.getX() - bp.getX();
                     double dy = pos.getY() - bp.getY();
@@ -103,7 +103,7 @@ public class ReactDiffPlant extends AbstractSingleBlockPlant {
 
             // Simulate a dead cell for this plant.
             double _V = BlockUtils.streamBlocksInRange(pos, RANGE)
-                    .filter(bp -> world.getBlockState(bp).getBlock() == DEMod.REACT_DIFF_PLANT)
+                    .filter(bp -> world.getBlockState(bp).getBlock() == Plants.REACT_DIFF_PLANT_BLOCK)
                     .map(bp -> {
                         double dx = pos.getX() - bp.getX();
                         double dy = pos.getY() - bp.getY();
@@ -121,7 +121,7 @@ public class ReactDiffPlant extends AbstractSingleBlockPlant {
                     })
                     .reduce(0d, Double::sum);
             if (_V > 0) {
-                world.setBlockState(chosenPos, DEMod.REACT_DIFF_PLANT.getDefaultState());
+                world.setBlockState(chosenPos, Plants.REACT_DIFF_PLANT_BLOCK.getDefaultState());
             }
 
             return;
